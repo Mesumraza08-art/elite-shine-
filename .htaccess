@@ -3,12 +3,14 @@ DirectoryIndex index.html
 Options -Indexes
 ErrorDocument 404 /index.html
 
-# Force HTTPS and www
 RewriteEngine On
+
+# Real domain: force https://www (only this domain, so Hostinger's
+# temporary preview URL isn't sent to a www. address with no certificate)
+RewriteCond %{HTTP_HOST} ^(www\.)?eliteshinecleaningservices\.net$ [NC]
 RewriteCond %{HTTPS} off [OR]
-RewriteCond %{HTTP_HOST} !^www\. [NC]
-RewriteCond %{HTTP_HOST} ^(?:www\.)?(.+)$ [NC]
-RewriteRule ^ https://www.%1%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTP_HOST} ^eliteshinecleaningservices\.net$ [NC]
+RewriteRule ^ https://www.eliteshinecleaningservices.net%{REQUEST_URI} [L,R=301]
 
 # Compression
 <IfModule mod_deflate.c>
